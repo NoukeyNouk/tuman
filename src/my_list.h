@@ -10,5 +10,6 @@ void List_print(List *list);
 void List_free(List *list);
 void List_remove(List *list, int index);
 void *List_get(List *list, int index);
+List *List_cat(List *list1, List *list2);
 
 #endif

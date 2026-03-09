@@ -25,30 +25,33 @@
 //     int flag3;
 // } Flags;
 
-List *
-
-Task *parse_task_string(const char *string) {
-    Task *task = malloc(sizeof(Task));
-    return task;
+void parse_fmt_text(Idea *idea) {
+    printf("parsing fmt_text...\n");
+    return;
 }
 
-char *create_task_string(Task *task) {
-    char *string = calloc(strlen(task->info) + 0x30, sizeof(char));
-    printf("creating task string...\n");
-    return string;
+void create_fmt_text(Idea *idea) {
+    printf("creating fmt_text for idea...\n");
+    return;
 }
 
-int write_into_fileBuffer(Task *task) {
+int write_into_fileBuffer(Idea *idea) {
     printf("writing into fileBuffer...\n");
     return 0;
 }    
 
-int push_buffer(List *buffer) {
+int push_ideas(List *buffer) {
     printf("pushing buffer...\n");
     return 0;
 }
 
-List *read_from_fileBuffer() {
+List *pull_ideas() {
+    List *list = List_init();
+    printf("Checking for ideas...\n");
+    return list;
+}
+
+List *read_from_fileBuffer() { // returns List of idea_str
     List *list = List_init();
     printf("reading from fileBuffer...\n");
     
@@ -65,30 +68,35 @@ int parse_cmd_args(int argc, char *argv[], Flags *cmd_flags) {
         printf("\ncommands:\n");
         printf("\tread\n");
         printf("\tpush\n");
-        return 0;
     }
-
-    if (strcmp(argv[1], "push") && argc == 3) {
-           
+    else if (strcmp(argv[1], "push") == 0 && argc == 3) {
+        cmd_flags->push = 1;
+        cmd_flags->idea = calloc(strlen(argv[2]) + 1, sizeof(char));
+        strcpy(cmd_flags->idea, argv[2]);
     }
-    else if (strcmp(argv[1], "read") && argc == 2) {
-
+    else if (strcmp(argv[1], "read") == 0 && argc == 2) {
+        cmd_flags->read = 1;
     }
 
     return 0;
 }
 
 int main(int argc, char *argv[]) {
-    Flags cmd_flags;
-    memset(cmd_flags, 0, sizeof(Flags));
+    Flags cmd_flags = {0};
     
     parse_cmd_args(argc, argv, &cmd_flags);
 
     if (cmd_flags.push) {
+        Idea idea = {0};
+        idea.text = cmd_flags.idea;
+        List *ideas = List_init();
+        List_append(ideas, &idea);
 
+        printf("%s\n", idea.text);
+        push_ideas(ideas);
     }
     else if (cmd_flags.read) {
-
+        
     }
         
     return 0;

@@ -124,3 +124,14 @@ void List_remove(List *list, int index) {
     return;
 }
 
+List *List_cat(List *list1, List *list2) {
+    Node *current = list2->head;
+    if (list2->head == NULL) {
+        return list1;
+    }
+    while (current) {
+        List_append(list1, current->data);
+        current = (current->next) ? current->next : NULL;
+    }
+    return list1;
+}

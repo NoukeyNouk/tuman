@@ -4,3 +4,6 @@ tuman: obj/main.o obj/my_list.o
 
 obj/%.o: src/%.c
 	gcc -c -g $< -o $@
+
+clean:
+	rm -f obj/* tuman

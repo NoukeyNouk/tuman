@@ -10,15 +10,16 @@ typedef struct List {
     Node *head;
 } List;
 
-typedef struct Task {
-    char *info;
+typedef struct Idea {
+    char *text;
+    char *fmt_text;
     List *tags;
-} Task;
+} Idea;
 
 typedef struct Flags {
-    int command;
-    int flag2;
-    int flag3;
+    int push;
+    int read;
+    char *idea;
 } Flags;
 
 #endif
