@@ -1,9 +1,15 @@
-tuman: obj/main.o obj/my_list.o
-	mkdir -p obj
-	gcc -g obj/main.o obj/my_list.o -o tuman
+FILES = obj/main.o
 
-obj/%.o: src/%.c
-	gcc -c -g $< -o $@
+DEP_FILES = $(FILES:.o=.d)
+
+tuman: $(FILES)
+	mkdir -p obj
+	g++ -g $(FILES) -o tuman -lcpr -lcurl -lssl -lcrypto
+
+obj/%.o: src/%.cpp
+	g++ -c -g $< -o $@ -MMD -MP
 
 clean:
 	rm -f obj/* tuman
+
+-include $(DEP_FILES)

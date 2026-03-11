@@ -1,2 +1,6 @@
 obj/
 tuman
+__pycache__/
+python_bot.egg-info/
+.venv/
+
