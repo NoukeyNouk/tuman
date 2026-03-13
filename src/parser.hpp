@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "CLI.hpp"
+#include "CLI11.hpp"
 
 class Parser {
 private:
