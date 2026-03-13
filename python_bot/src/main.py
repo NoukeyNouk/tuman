@@ -1,27 +1,26 @@
-from fastapi import FastAPI, Form
-from fastapi.responses import PlainTextResponse
+import asyncio
 import uvicorn
+from web_server import WebServer
+# Не забудь добавить aiogram и uvicorn в зависимости твоего pyproject.toml
+
+async def async_main():
+    web_server = WebServer()
+    
+    # Настраиваем Uvicorn
+    config = uvicorn.Config(app=web_server.app, host="0.0.0.0", port=8000)
+    server = uvicorn.Server(config)
+
+    print("Запускаем сервер и бота...")
+    
+    # Запускаем обе корутины конкурентно в одном event loop
+    await asyncio.gather(server.serve())
 
 
 def main():
-    app = FastAPI()
-
-    # Обрабатываем GET-запрос (проверка связи)
-    @app.get("/ping")
-    def ping():
-        # Возвращаем статус 200 OK автоматически
-        return {"status": "alive"}
-
-    # Обрабатываем POST-запрос (прием сообщения)
-    # В C++ мы использовали cpr::Payload, поэтому здесь ждем данные из Form
-    @app.post("/message", response_class=PlainTextResponse)
-    def receive_message(text: str = Form(...)):
-        print(f"\n[+] Получено сообщение от C++ программы: {text}\n")
-
-        # Этот текст вернется в C++ как r.text
-        return f"Привет, C++! Бот успешно получил твое сообщение: '{text}'"
-
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    try:
+        asyncio.run(async_main())
+    except KeyboardInterrupt:
+        print("\nПрограмма остановлена вручную.")
 
 
 if __name__ == "__main__":
